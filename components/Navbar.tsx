@@ -1,0 +1,43 @@
+import { Sparkle, Map, MessageSquare } from "lucide-react"
+import Link from "next/link"
+import ThemeToggle from "./ThemeToggle"
+import { SignOutButton } from "@clerk/nextjs"
+import { SignIn, SignInButton } from "@clerk/react"
+
+
+const Navbar = () => {
+  return (
+    <nav className='border-b bg-background'>
+      <div className='container mx-auto flex h-16 items-center justify-between'>
+        <div className='flex items-center gap-6'>
+          <Link href="/">
+            <div className="flex items-center gap-2">
+              <div className="h-8 w-8 rounded-lg bg-linear-to-r from-blue-500 to-purple-500 flex items-center justify-center">
+                <Sparkle className="text-white h-4 w-4" />
+              </div>
+              <span className="text-xl font-bold">  Feedback Fusion</span>
+            </div>
+          </Link>
+          <Link href="/roadmap" className="text-sm hover:text-primary flex itmes-center gap-1">
+            <Map className="h-4 w-4" />
+            Roadmap
+          </Link>
+          <Link href="/feedback" className="text-sm hover:text-primary flex itmes-center gap-1">
+            <MessageSquare className="h-4 w-4" />
+            Feedback
+          </Link>
+
+        </div>
+        <div className="flex items-center gap-4">
+          <ThemeToggle />
+          <SignOutButton>
+        
+          </SignOutButton>
+        </div>
+      </div>
+    </nav>
+  )
+}
+
+export default Navbar
+
