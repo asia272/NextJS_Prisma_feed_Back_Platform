@@ -23,7 +23,8 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={`${inter.className} min-h-screen flex flex-col`}>
-          <ThemeProvider attribute={"class"} defaultTheme="light" enableSystem disableTransitionOnChange>
+          <ThemeProvider attribute={"class"}
+            defaultTheme="light" enableSystem disableTransitionOnChange>
             <Navbar />
             <main className="flex-1 container mx-auto px-4 py-8">
               {children}
