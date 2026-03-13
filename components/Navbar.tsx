@@ -1,7 +1,9 @@
+"use client"
 import { Sparkle, Map, MessageSquare } from "lucide-react"
 import Link from "next/link"
 import ThemeToggle from "./ThemeToggle"
-import { SignOutButton, SignInButton } from "@clerk/nextjs"
+import { SignOutButton, SignInButton, UserButton } from "@clerk/nextjs"
+
 
 import { Button } from "./ui/button"
 
@@ -31,6 +33,7 @@ const Navbar = () => {
         </div>
         <div className="flex items-center gap-4">
           <ThemeToggle />
+
           <SignOutButton>
             <SignInButton>
               <Button asChild>
@@ -38,6 +41,10 @@ const Navbar = () => {
               </Button>
             </SignInButton>
           </SignOutButton>
+
+    
+            {/* <UserButton></UserButton> */}
+       
         </div>
       </div>
     </nav>

@@ -27,7 +27,7 @@ enum PostStatus {
 
 model User {
   id          Int     @id @default(autoincrement())
-  clerkUserId String
+  clerkUserId String @unique
   email       String  @unique
   name        String?
   image       String

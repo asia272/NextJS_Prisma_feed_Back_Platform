@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Bluetooth } from "lucide-react";
+import { syncClerkUserToDb } from "@/lib/sync-user";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,11 +15,12 @@ export const metadata: Metadata = {
   description: "A platform for users to suggest and vote on features",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  await syncClerkUserToDb();
   return (
     <ClerkProvider>
       <html lang="en">
