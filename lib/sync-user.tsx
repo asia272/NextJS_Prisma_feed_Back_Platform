@@ -1,7 +1,7 @@
 import { currentUser } from '@clerk/nextjs/server'
 import prisma from './prisma';
 
-export async function syncClerkUserToDb() {
+export async function syncCurrentUser() {
 
     try {
         const activeUser = await currentUser()
