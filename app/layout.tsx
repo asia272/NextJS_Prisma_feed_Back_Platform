@@ -5,7 +5,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Bluetooth } from "lucide-react";
 import { syncClerkUserToDb } from "@/lib/sync-user";
 
 const inter = Inter({ subsets: ["latin"] });

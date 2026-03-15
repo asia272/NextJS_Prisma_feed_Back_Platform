@@ -2,8 +2,8 @@
 import { Sparkle, Map, MessageSquare } from "lucide-react"
 import Link from "next/link"
 import ThemeToggle from "./ThemeToggle"
-import { SignOutButton, SignInButton, UserButton } from "@clerk/nextjs"
 
+import { Show, SignInButton, UserButton } from '@clerk/nextjs'
 
 import { Button } from "./ui/button"
 
@@ -29,27 +29,25 @@ const Navbar = () => {
             <MessageSquare className="h-4 w-4" />
             Feedback
           </Link>
-
         </div>
         <div className="flex items-center gap-4">
           <ThemeToggle />
-
-          <SignOutButton>
+          <Show when="signed-out">
             <SignInButton>
               <Button asChild>
                 <Link href="/sign-in"> Sign In</Link>
               </Button>
             </SignInButton>
-          </SignOutButton>
-
-    
-            {/* <UserButton></UserButton> */}
-       
+          </Show>
+          <Show when="signed-in">
+            <UserButton />
+          </Show>
         </div>
       </div>
     </nav>
   )
 }
+
 
 export default Navbar
 

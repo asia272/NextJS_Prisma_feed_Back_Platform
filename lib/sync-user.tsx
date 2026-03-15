@@ -47,6 +47,7 @@ export async function syncClerkUserToDb() {
              console.log(`New user created: ${activeUserEmail} with role: ${dbUser.role}`)
         }
        
+ 
         return dbUser
     } catch (error) {
         console.error("error syncing user from clerk:", error)
