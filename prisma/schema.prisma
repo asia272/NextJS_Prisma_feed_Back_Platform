@@ -26,6 +26,7 @@ enum PostStatus {
 }
 
 model User {
+  id          Int     @id @default(autoincrement())
   clerkUserId String  @unique
   email       String  @unique
   name        String?
@@ -42,8 +43,8 @@ model Post {
   category    String
   status      PostStatus @default(under_review)
   content     String
- authorId    String  
-  author      User       @relation(fields: [authorId], references: [clerkUserId])
+  authorId    Int
+  author      User       @relation(fields: [authorId], references: [id])
   votes       Vote[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
@@ -51,10 +52,10 @@ model Post {
 
 model Vote {
   id     Int  @id @default(autoincrement())
-  userId String
-  user   User @relation(fields: [userId], references: [clerkUserId])
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
   postId Int
   post   Post @relation(fields: [postId], references: [id])
-  
-@@unique([userId,postId])
+
+  @@unique([userId, postId])
 }

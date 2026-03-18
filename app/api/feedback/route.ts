@@ -24,6 +24,7 @@ export async function POST(req: NextRequest) {
                 authorId:dbUser.id
             }
         })
+        console.log("post create succfully:", post)
         return NextResponse.json(post);
     } catch (error) {
         console.error("Error creating post:", error)

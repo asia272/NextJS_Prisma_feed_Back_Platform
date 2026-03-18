@@ -4,7 +4,7 @@ import prisma from './prisma';
 export async function syncCurrentUser() {
 
     try {
-        const activeUser = await currentUser()
+        const activeUser = await currentUser();
 
         if (!activeUser) {
             return null
@@ -16,12 +16,19 @@ export async function syncCurrentUser() {
             throw new Error("User email not found");
         }
         // Check if User exist is DB
-        let dbUser = await prisma.user.findUnique({ where: { clerkUserId: activeUser.id } })
+        let dbUser = await prisma.user.findFirst({
+            where: {
+                OR: [
+                    { clerkUserId: activeUser.id },
+                    { email: activeUserEmail }
+                ]
+            }
+        })
 
         //if user exist then update
         if (dbUser) {
             dbUser = await prisma.user.update({
-                where: { clerkUserId: dbUser.clerkUserId },
+          where: { id: dbUser.id }
                 data: {
                     email: activeUserEmail,
                     name: `${activeUser.firstName || ""} ${activeUser.lastName || ""}`.trim(),
@@ -44,10 +51,10 @@ export async function syncCurrentUser() {
                     role: isFirstUser ? "admin" : "user",
                 }
             })
-             console.log(`New user created: ${activeUserEmail} with role: ${dbUser.role}`)
+            console.log(`New user created: ${activeUserEmail} with role: ${dbUser.role}`)
         }
-       
- 
+
+
         return dbUser
     } catch (error) {
         console.error("error syncing user from clerk:", error)
