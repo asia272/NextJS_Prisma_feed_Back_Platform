@@ -7,11 +7,25 @@ export async function POST(req: NextRequest) {
 
     try {
         // 1 check if user exist
-        const dbUser = await currentUser();
-        if (!dbUser) {
+        const clerkUser = await currentUser();
+        if (!clerkUser) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
         }
-        //2 get data from body
+        // 2 Find clerk user in DB
+        const dbUser = await prisma.user.findUnique({
+            where: {
+                clerkUserId: clerkUser.id
+            }
+        });
+
+        if (!dbUser) {
+            return NextResponse.json(
+                { error: "User not found in DB" },
+                { status: 404 }
+            );
+        }
+
+        //3 get data from body
         const body = await req.json();
         const { title, description, category } = body;
 
@@ -20,7 +34,7 @@ export async function POST(req: NextRequest) {
                 title,
                 description,
                 category,
-                authorId:dbUser.id
+                authorId: dbUser.id
             }
         })
         console.log("post create succfully:", post)

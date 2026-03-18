@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/theme-provider";
 import { syncCurrentUser } from "@/lib/sync-user";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,11 +22,14 @@ export default async function RootLayout({
 }>) {
   await syncCurrentUser();
   return (
+
     <ClerkProvider>
       <html lang="en">
+
         <body className={`${inter.className} min-h-screen flex flex-col`}>
           <ThemeProvider attribute={"class"}
             defaultTheme="light" enableSystem disableTransitionOnChange>
+            <Toaster position="top-right" richColors />
             <Navbar />
             <main className="flex-1 container mx-auto px-4 py-8">
               {children}

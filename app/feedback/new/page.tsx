@@ -8,14 +8,17 @@ import { Textarea } from "@/components/ui/textarea"
 import { ArrowLeft, Link } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
-
-
-
+import { redirect, useRouter } from "next/navigation";
+import { auth } from "@clerk/nextjs/server"
 
 const NewFeedbackPage = () => {
+    const { userId } = auth();
 
+    if (!userId) {
+        redirect("/sign-in");
+    }
     const [isSubmitting, setIsSubmitting] = useState(false)
-
+    const router = useRouter();
     // Server action function
     async function submitFeedback(formData: FormData) {
         setIsSubmitting(true); // start loading
@@ -41,11 +44,14 @@ const NewFeedbackPage = () => {
 
             toast.dismiss(loadingToast);
             toast.success("Your feedback has been submitted successfully");
-
+            //  Redirect to /feedback
+            router.push("/feedback");
+            return true;
         } catch (error) {
             console.error(error);
             toast.dismiss(loadingToast);
             toast.error("Something went wrong.");
+            return false;
         } finally {
             setIsSubmitting(false); // stop loading 
         }
@@ -71,7 +77,19 @@ const NewFeedbackPage = () => {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <form action={submitFeedback} className="space-y-6">
+                    <form
+                        onSubmit={async (e) => {
+                            e.preventDefault();
+                            const form = e.currentTarget;
+                            const formData = new FormData(form);
+                            await submitFeedback(formData).then((success: boolean) => {
+                                if (success) {
+                                    form.reset();
+                                }
+                            });
+
+                        }}
+                        className="space-y-6">
                         {/* title */}
                         <div className="space-y-2" >
                             <Label htmlFor="title">Title</Label>
@@ -110,7 +128,7 @@ const NewFeedbackPage = () => {
                         {/* Buttons */}
                         <div className="flex gap-4">
                             <Button type="submit" disabled={isSubmitting}>
-                                {isSubmitting ? "Submitting" : "Submit Feedback"}
+                                {isSubmitting ? "Submitting..." : "Submit Feedback"}
                             </Button>
                             <Button type="button" variant="outline" asChild>
                                 <Link href="/feedback">Cancel</Link>
