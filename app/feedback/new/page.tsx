@@ -9,14 +9,14 @@ import { ArrowLeft, Link } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
 import { redirect, useRouter } from "next/navigation";
-import { auth } from "@clerk/nextjs/server"
+// import { auth } from "@clerk/nextjs/server"
 
 const NewFeedbackPage = () => {
-    const { userId } = auth();
+    // const { userId } = auth();
 
-    if (!userId) {
-        redirect("/sign-in");
-    }
+    // if (!userId) {
+    //     redirect("/sign-in");
+    // }
     const [isSubmitting, setIsSubmitting] = useState(false)
     const router = useRouter();
     // Server action function
