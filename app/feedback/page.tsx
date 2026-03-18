@@ -1,17 +1,26 @@
 "use client"
 import { GradientHeader } from '@/components/gradient-header'
 import { Button } from '@/components/ui/button'
-import { SignInButton } from '@clerk/nextjs'
-import { Show } from '@clerk/react'
-import { get } from 'http'
+import prisma from '@/lib/prisma'
 import { Map, PlusIcon } from 'lucide-react'
 import Link from 'next/link'
-import React, { useEffect } from 'react'
 
-const page = () => {
-  // useEffect(() => {
-  //   await fetch("/api/feedback", { method: "GET" })
-  // })
+const page = async () => {
+
+  const posts = await prisma.post.findMany({
+    include: {
+      author: true,
+      votes: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+  const categories = await prisma.post.groupBy({
+    by: ["category"],
+    _count: true,
+  });
+
 
   return (
 
@@ -48,7 +57,9 @@ const page = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* sidebar */}
-          <div className="lg:col-span-1 space-y-6"></div>
+          <div className="lg:col-span-1 space-y-6">
+
+          </div>
           {/* Main Content */}
           <div className="lg:col-span-3"></div>
         </div>
