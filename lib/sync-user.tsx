@@ -28,8 +28,9 @@ export async function syncCurrentUser() {
         //if user exist then update
         if (dbUser) {
             dbUser = await prisma.user.update({
-          where: { id: dbUser.id }
+                where: { id: dbUser.id },
                 data: {
+                    clerkUserId: activeUser.id,
                     email: activeUserEmail,
                     name: `${activeUser.firstName || ""} ${activeUser.lastName || ""}`.trim(),
                     image: activeUser.imageUrl,

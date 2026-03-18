@@ -20,7 +20,6 @@ export async function POST(req: NextRequest) {
                 title,
                 description,
                 category,
-                content:"",
                 authorId:dbUser.id
             }
         })
