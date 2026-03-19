@@ -6,9 +6,13 @@ import { Map, PlusIcon } from 'lucide-react'
 import Link from 'next/link'
 import { getCategoryDesign } from '../data/category-data'
 import { Badge } from '@/components/ui/badge'
+import { auth } from '@clerk/nextjs/server'
+import FeedbackList from '@/components/FeedbackList'
 
 const page = async () => {
-
+  //Get user Id
+  const { userId } = await auth();
+  //Get all posts
   const posts = await prisma.post.findMany({
     include: {
       author: true,
@@ -18,6 +22,7 @@ const page = async () => {
       createdAt: "desc",
     },
   });
+  //Get all categories
   const categories = await prisma.post.groupBy({
     by: ["category"],
     _count: true,
@@ -92,7 +97,7 @@ const page = async () => {
           </div>
           {/* Main Content */}
           <div className="lg:col-span-3">
-            
+            <FeedbackList initialPosts={posts} userId={userId} />
           </div>
         </div>
       </div >
