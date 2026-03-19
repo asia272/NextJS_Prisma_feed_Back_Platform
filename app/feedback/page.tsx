@@ -1,9 +1,11 @@
-"use client"
+
 import { GradientHeader } from '@/components/gradient-header'
 import { Button } from '@/components/ui/button'
 import prisma from '@/lib/prisma'
 import { Map, PlusIcon } from 'lucide-react'
 import Link from 'next/link'
+import { getCategoryDesign } from '../data/category-data'
+import { Badge } from '@/components/ui/badge'
 
 const page = async () => {
 
@@ -20,7 +22,7 @@ const page = async () => {
     by: ["category"],
     _count: true,
   });
-
+  console.log(categories)
 
   return (
 
@@ -58,12 +60,42 @@ const page = async () => {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* sidebar */}
           <div className="lg:col-span-1 space-y-6">
+            {categories.map((cat: any) => {
 
+              const design = getCategoryDesign(cat.category);
+              const Icon = design.icon;
+
+              return (
+                <div
+                  key={cat.category}
+                  className="group flex items-center justify-between p-3 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer"
+                >
+                  <div className="flex items-center gap-3">
+                    <div
+                      className={`p-2 rounded-lg ${design.light} ${design.border} border`}
+                    >
+                      <Icon className={`h-4 w-4 ${design.text}`}></Icon>
+                    </div>
+                    <span className="font-medium text-sm">
+                      {cat.category}
+                    </span>
+                  </div>
+                  <Badge
+                    variant="secondary"
+                    className={`${design.light} ${design.text}`}
+                  >
+                    {cat._count}
+                  </Badge>
+                </div>
+              );
+            })}
           </div>
           {/* Main Content */}
-          <div className="lg:col-span-3"></div>
+          <div className="lg:col-span-3">
+            
+          </div>
         </div>
-      </div>
+      </div >
 
     </>
   )
