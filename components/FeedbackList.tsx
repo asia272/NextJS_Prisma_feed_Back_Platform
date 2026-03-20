@@ -1,7 +1,7 @@
 "use client"
 import { formatDistanceToNow } from "date-fns";
 import { useState } from "react";
-import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { User } from "lucide-react";
 import { STATUS_GROUPS } from "@/app/data/status-data";
 import { Badge } from "./ui/badge";
@@ -63,6 +63,11 @@ const FeedbackList = ({ initialPosts, userId }:
                             </div>
                         </div>
                     </CardHeader>
+                    <CardContent>
+                        <p className="text-muted-foreground mb-3">
+                            {post.description}
+                        </p>
+                    </CardContent>
                 </Card>
 
             ))}
