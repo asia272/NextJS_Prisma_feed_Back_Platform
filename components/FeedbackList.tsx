@@ -5,6 +5,7 @@ import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { User } from "lucide-react";
 import { STATUS_GROUPS } from "@/app/data/status-data";
 import { Badge } from "./ui/badge";
+import { getCategoryDesign } from "@/app/data/category-data";
 
 
 const FeedbackList = ({ initialPosts, userId }:
@@ -32,7 +33,7 @@ const FeedbackList = ({ initialPosts, userId }:
                                     </span>
                                 </CardDescription>
                             </div>
-                            <div className="flex -gap1.5">
+                            <div className="flex gap-1.5">
                                 {/* Status Badge */}
                                 {(() => {
                                     const statusGroup = STATUS_GROUPS[post.status as keyof typeof STATUS_GROUPS];
@@ -46,6 +47,19 @@ const FeedbackList = ({ initialPosts, userId }:
                                     )
                                 })()}
                                 {/* Category */}
+                                {(() => {
+                                    const design = getCategoryDesign(post.category);
+                                    const Icon = design.icon;
+
+                                    return (
+
+                                        <Badge className={`${design.light} ${design.text}  border flex items-center gap-1`}>
+                                            <Icon className="h-3 w-3" />
+                                            {post.category}
+                                        </Badge>
+
+                                    );
+                                })()}
                             </div>
                         </div>
                     </CardHeader>
