@@ -2,16 +2,45 @@
 import { formatDistanceToNow } from "date-fns";
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import { User } from "lucide-react";
+import { MessagesSquare, ThumbsUp, User } from "lucide-react";
 import { STATUS_GROUPS } from "@/app/data/status-data";
 import { Badge } from "./ui/badge";
 import { getCategoryDesign } from "@/app/data/category-data";
+import { Button } from "./ui/button";
+import { toast } from "sonner";
+
 
 
 const FeedbackList = ({ initialPosts, userId }:
     { initialPosts: any[]; userId: string | null }) => {
 
-    const [posts, setPosts] = useState(initialPosts)
+    const [posts, setPosts] = useState(initialPosts);
+
+    async function handleVote(postId: any) {
+        if (!userId) {
+            toast.error("Please sign in to vote on feedack")
+
+        }
+        try {
+            const response = await fetch("/api/vote", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ postId }),
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to create post");
+            }
+
+
+        } catch (error) {
+            console.error(error);
+
+        }
+    }
+
 
     return (
         <div className="space-y-4">
@@ -67,6 +96,19 @@ const FeedbackList = ({ initialPosts, userId }:
                         <p className="text-muted-foreground mb-3">
                             {post.description}
                         </p>
+                        <div className="flex items-center justify-between">
+                            <Button variant="outline" size="sm" onClick={() => handleVote(post.id)}>
+                                <ThumbsUp className={`h-4 w-4 ${post.votes.some((v: any) => v.userId === userId)
+                                    ? "fill-current"
+                                    : ""
+                                    }`} />
+                                <span>{post.votes.length}Vote</span>
+                            </Button>
+                            <div className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1">
+                                <MessagesSquare className="h-4 w-4" />
+                                comment
+                            </div>
+                        </div>
                     </CardContent>
                 </Card>
 

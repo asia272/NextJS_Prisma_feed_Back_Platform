@@ -27,7 +27,7 @@ const page = async () => {
     by: ["category"],
     _count: true,
   });
-  console.log(categories)
+
 
   return (
 
