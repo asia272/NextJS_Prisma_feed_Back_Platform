@@ -19,10 +19,12 @@ const FeedbackList = ({ initialPosts, userId }:
     async function handleVote(postId: any) {
         if (!userId) {
             toast.error("Please sign in to vote on feedack")
-
+            return;
         }
+
+        const loadingToast = toast.loading("Submitting vote...");
         try {
-            const response = await fetch("/api/vote", {
+            const response = await fetch("/api/votes", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -33,10 +35,31 @@ const FeedbackList = ({ initialPosts, userId }:
             if (!response.ok) {
                 throw new Error("Failed to create post");
             }
+            const data = await response.json();
+            //Dismis loading toast and show success
+            toast.dismiss(loadingToast);
+            toast.success(data.voted ? "Vote added" : "Vote removed");
 
-
+            //Update local state
+            setPosts(posts.map((post) => {
+                if (post.id === postId) {
+                    const voteCount = post.votes.lenght;
+                    return {
+                        ...post,
+                        votes: data.voted
+                            ? [...post.vote, { userId }]
+                            : post.vote.filter((v: any) => v.userId !== userId),
+                        _count: {
+                            votes: data.voted ? voteCount + 1 : voteCount - 1,
+                        }
+                    }
+                }
+                return post;
+            }))
         } catch (error) {
             console.error(error);
+            toast.dismiss(loadingToast);
+            toast.error("Failed to submit vote. Please try again");
 
         }
     }
@@ -102,7 +125,7 @@ const FeedbackList = ({ initialPosts, userId }:
                                     ? "fill-current"
                                     : ""
                                     }`} />
-                                <span>{post.votes.length}Vote</span>
+                                <span>{post.votes.length} Vote</span>
                             </Button>
                             <div className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1">
                                 <MessagesSquare className="h-4 w-4" />
