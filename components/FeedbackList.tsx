@@ -12,7 +12,7 @@ import { toast } from "sonner";
 
 
 const FeedbackList = ({ initialPosts, userId }:
-     { initialPosts: any[]; userId: string | null }) => {
+    { initialPosts: any[]; userId: string | null }) => {
 
     const [posts, setPosts] = useState(initialPosts);
 
@@ -41,24 +41,25 @@ const FeedbackList = ({ initialPosts, userId }:
             toast.success(data.voted ? "Vote added" : "Vote removed");
 
             //Update local state
-    setPosts((prevPosts) =>
-  prevPosts.map((post) => {
-    if (post.id === postId) {
-      const voteCount = post.votes.length;
+            setPosts((prevPosts) =>
+                prevPosts.map((post) => {
+                    if (post.id === postId) {
+                        const voteCount = post.votes.length;
 
-      return {
-        ...post,
-        votes: data.voted
-          ? [...post.votes, { userId }]
-          : post.votes.filter((v: any) => v.userId !== userId),
-        _count: {
-          votes: data.voted ? voteCount + 1 : voteCount - 1,
-        },
-      };
-    }
-    return post;
-  })
-);
+                        return {
+                            ...post,
+                            votes: data.voted
+                                ? [...post.votes, { userId }]
+                                : post.votes.filter((v: any) => v.userId !== userId),
+                            _count: {
+                                votes: data.voted ? voteCount + 1 : voteCount - 1,
+                            },
+                        };
+                    }
+                    return post;
+                })
+            );
+            
         } catch (error) {
             console.log(error);
             toast.dismiss(loadingToast);
@@ -69,7 +70,7 @@ const FeedbackList = ({ initialPosts, userId }:
         <div className="space-y-4">
 
             {posts.map((post) => (
-                <Card className="hover:shadow-md transition-shadow border">
+                <Card key={post.id} className="hover:shadow-md transition-shadow border">
                     <CardHeader>
                         <div className="flex items-start justify-between">
                             <div className="flex-1 min-w-0">
