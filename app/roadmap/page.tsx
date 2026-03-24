@@ -1,5 +1,7 @@
 import { GradientHeader } from '@/components/gradient-header'
+import { Card, CardContent } from '@/components/ui/card';
 import prisma from '@/lib/prisma'
+import { Target } from 'lucide-react';
 import React from 'react'
 
 
@@ -27,7 +29,7 @@ const page = async () => {
       }
     }
   })
-  //get all posts base on status  
+  //get  posts based on status  
   const groupedPosts = {
     under_review: posts.filter((p) => p.status === "under_review"),
     planned: posts.filter((p) => p.status === "planned"),
@@ -42,7 +44,9 @@ const page = async () => {
   const completedPercentage = getStatusPercentage(posts, "completed");
   const inProgressPercentage = getStatusPercentage(posts, "in_progress");
   const plannedPercentage = getStatusPercentage(posts, "planned");
-  
+
+
+
   return (
     <div className='space-8'>
       <GradientHeader title='Product Roadmap'
@@ -51,7 +55,17 @@ const page = async () => {
       />
       {/* Stats Overview */}
       <div className='grid grid-cols-1 md:grid-cols-1 lg:grid-cols-4 gap-6'>
-
+        <Card className='border-l4 border-l-blue-500'>
+          <CardContent className='pt-6'>
+            <div className='flex items-center justify-between'>
+              <div>
+                <p className='text-sm text-muted-foreground'>Toatl Features</p>
+                <p className='text-3xl font-bold'>{posts.length}</p>
+              </div>
+              <Target className='h-20 w-10 text-blue-500' />
+            </div>
+          </CardContent>
+        </Card>
       </div>
       {/* Overall  Progress */}
       {/* roadmap Columns */}
