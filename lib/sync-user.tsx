@@ -46,7 +46,6 @@ export async function syncCurrentUser() {
 
             dbUser = await prisma.user.create({
                 data: {
-                    id: activeUser.id,
                     clerkUserId: activeUser.id,
                     email: activeUserEmail,
                     name: `${activeUser.firstName || ""} ${activeUser.lastName || ""}`.trim(),
