@@ -36,6 +36,8 @@ model User {
   role        Role    @default(user)
 }
 
+
+
 model Post {
   id          Int        @id @default(autoincrement())
   title       String
