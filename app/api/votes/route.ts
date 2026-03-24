@@ -1,12 +1,13 @@
 import prisma from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
+import { syncCurrentUser } from "@/lib/sync-user";
 
 export async function POST(req: NextRequest) {
 
     try {
 
-        const dbUser = await currentUser();
+        const dbUser = await syncCurrentUser();
         if (!dbUser) {
             return NextResponse.json({ error: "Unautherized" }, { status: 401 })
         }
@@ -24,7 +25,7 @@ export async function POST(req: NextRequest) {
         const existingVote = await prisma.vote.findUnique({
             where: {
                 userId_postId: {
-                    userId: Number(dbUser.id),
+                    userId: dbUser.id,
                     postId
                 }
             }
@@ -37,7 +38,7 @@ export async function POST(req: NextRequest) {
         } else {
             const vote = await prisma.vote.create({
                 data: {
-                    userId:Number(dbUser.id),
+                    userId: dbUser.id,
                     postId
                 }
             })

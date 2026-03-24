@@ -36,6 +36,7 @@ export async function syncCurrentUser() {
                     image: activeUser.imageUrl,
                 },
             })
+
         } else {
             //if user is not exist then create new user
             //Check if this is first user then make it admin
@@ -45,6 +46,7 @@ export async function syncCurrentUser() {
 
             dbUser = await prisma.user.create({
                 data: {
+                    id: activeUser.id,
                     clerkUserId: activeUser.id,
                     email: activeUserEmail,
                     name: `${activeUser.firstName || ""} ${activeUser.lastName || ""}`.trim(),
@@ -54,8 +56,6 @@ export async function syncCurrentUser() {
             })
             console.log(`New user created: ${activeUserEmail} with role: ${dbUser.role}`)
         }
-
-
         return dbUser
     } catch (error) {
         console.error("error syncing user from clerk:", error)
