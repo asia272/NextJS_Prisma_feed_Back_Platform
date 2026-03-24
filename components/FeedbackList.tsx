@@ -41,21 +41,24 @@ const FeedbackList = ({ initialPosts, userId }:
             toast.success(data.voted ? "Vote added" : "Vote removed");
 
             //Update local state
-            setPosts(posts.map((post) => {
-                if (post.id === postId) {
-                    const voteCount = post.votes.lenght;
-                    return {
-                        ...post,
-                        votes: data.voted
-                            ? [...post.vote, { userId }]
-                            : post.vote.filter((v: any) => v.userId !== userId),
-                        _count: {
-                            votes: data.voted ? voteCount + 1 : voteCount - 1,
-                        }
-                    }
-                }
-                return post;
-            }))
+    setPosts((prevPosts) =>
+  prevPosts.map((post) => {
+    if (post.id === postId) {
+      const voteCount = post.votes.length;
+
+      return {
+        ...post,
+        votes: data.voted
+          ? [...post.votes, { userId }]
+          : post.votes.filter((v: any) => v.userId !== userId),
+        _count: {
+          votes: data.voted ? voteCount + 1 : voteCount - 1,
+        },
+      };
+    }
+    return post;
+  })
+);
         } catch (error) {
             console.log(error);
             toast.dismiss(loadingToast);
