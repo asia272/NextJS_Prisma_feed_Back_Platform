@@ -91,6 +91,17 @@ const page = async () => {
             </div>
           </CardContent>
         </Card>
+        <Card className='border-l4 border-l-yellow-500'>
+          <CardContent className='pt-6'>
+            <div className='flex items-center justify-between'>
+              <div>
+                <p className='text-sm text-muted-foreground'>Average Votes</p>
+                <p className='text-3xl font-bold'>{avergeVotes}</p>
+              </div>
+              <BarChart3 className='h-20 w-10 text-yellow-500' />
+            </div>
+          </CardContent>
+        </Card>
 
       </div>
       {/* Overall  Progress */}
