@@ -1,7 +1,8 @@
 import { GradientHeader } from '@/components/gradient-header'
 import { Card, CardContent } from '@/components/ui/card';
 import prisma from '@/lib/prisma'
-import { Target } from 'lucide-react';
+import { BarChart3, Target } from 'lucide-react';
+import { group } from 'node:console';
 import React from 'react'
 
 
@@ -66,6 +67,31 @@ const page = async () => {
             </div>
           </CardContent>
         </Card>
+        <Card className='border-l4 border-l-purple-500'>
+          <CardContent className='pt-6'>
+            <div className='flex items-center justify-between'>
+              <div>
+                <p className='text-sm text-muted-foreground'>Toatl Votes</p>
+                <p className='text-3xl font-bold'>{totalVotes}</p>
+              </div>
+              <BarChart3 className='h-20 w-10 text-purple-500' />
+            </div>
+          </CardContent>
+        </Card>
+        <Card className='border-l4 border-l-green-500'>
+          <CardContent className='pt-6'>
+            <div className='flex items-center justify-between'>
+              <div>
+                <p className='text-sm text-muted-foreground'>Completed</p>
+                <p className='text-3xl font-bold'>
+                  {groupedPosts.completed.length}
+                </p>
+              </div>
+              <BarChart3 className='h-20 w-10 text-green-500' />
+            </div>
+          </CardContent>
+        </Card>
+
       </div>
       {/* Overall  Progress */}
       {/* roadmap Columns */}
