@@ -12,7 +12,7 @@ import { toast } from "sonner";
 
 
 const FeedbackList = ({ initialPosts, userId }:
-    { initialPosts: any[]; userId: string | null }) => {
+     { initialPosts: any[]; userId: string | null }) => {
 
     const [posts, setPosts] = useState(initialPosts);
 
@@ -57,14 +57,11 @@ const FeedbackList = ({ initialPosts, userId }:
                 return post;
             }))
         } catch (error) {
-            console.error(error);
+            console.log(error);
             toast.dismiss(loadingToast);
             toast.error("Failed to submit vote. Please try again");
-
         }
     }
-
-
     return (
         <div className="space-y-4">
 

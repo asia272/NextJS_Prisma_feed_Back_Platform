@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import { syncCurrentUser } from "@/lib/sync-user";
 import { currentUser } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -6,26 +7,13 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
 
     try {
-        // 1 check if user exist
-        const clerkUser = await currentUser();
-        if (!clerkUser) {
-            return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-        }
-        // 2 Find clerk user in DB
-        const dbUser = await prisma.user.findUnique({
-            where: {
-                clerkUserId: clerkUser.id
-            }
-        });
 
+
+        const dbUser = await syncCurrentUser();
         if (!dbUser) {
-            return NextResponse.json(
-                { error: "User not found in DB" },
-                { status: 404 }
-            );
+            return NextResponse.json({ error: "Unautherized" }, { status: 401 })
         }
-
-        //3 get data from body
+        // get data from body
         const body = await req.json();
         const { title, description, category } = body;
 
@@ -34,7 +22,7 @@ export async function POST(req: NextRequest) {
                 title,
                 description,
                 category,
-                authorId: dbUser.id
+                authorId: dbUser?.id
             }
         })
         console.log("post create succfully:", post)

@@ -82,11 +82,12 @@ const NewFeedbackPage = () => {
                             e.preventDefault();
                             const form = e.currentTarget;
                             const formData = new FormData(form);
-                            await submitFeedback(formData).then((success: boolean) => {
-                                if (success) {
-                                    form.reset();
-                                }
-                            });
+                            await submitFeedback(formData)
+                                .then((success: boolean) => {
+                                    if (success) {
+                                        form.reset();
+                                    }
+                                });
 
                         }}
                         className="space-y-6">

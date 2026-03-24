@@ -42,6 +42,7 @@ export async function POST(req: NextRequest) {
                     postId
                 }
             })
+            console.log(vote)
             return NextResponse.json({ voted: true })
         }
 
