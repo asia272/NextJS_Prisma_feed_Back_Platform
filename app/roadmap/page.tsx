@@ -1,5 +1,6 @@
 import { GradientHeader } from '@/components/gradient-header'
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
 import prisma from '@/lib/prisma'
 import { BarChart3, Target } from 'lucide-react';
 import { group } from 'node:console';
@@ -102,12 +103,42 @@ const page = async () => {
             </div>
           </CardContent>
         </Card>
-
       </div>
       {/* Overall  Progress */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Roadmap Progress</CardTitle>
+          <CardDescription>
+            Track the journey from idea to completion
+          </CardDescription>
+        </CardHeader>
+        <CardContent className='space-y-6'>
+          <div className='space-y-2'>
+            <div className='flex justify-between text-sm'>
+              <span>Overall completion</span>
+              <span className='font-medium'>
+                {completedPercentage}
+              </span>
+            </div>
+            <Progress value={completedPercentage} className='h-2' />
+          </div>
+          <div className='gird grid-cols-3 gap-4'>
+            <div className='text-center'>
+              <div>{inProgressPercentage}%</div>
+              <span>Inprogress</span>
+            </div>
+            <div className='text-center'>
+              <div>{plannedPercentage}%</div>
+              <span>Planned</span>
+            </div>
+            <div className='text-center'>
+              <div>{completedPercentage}%</div>
+              <span>Completed</span>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
       {/* roadmap Columns */}
-
-
     </div>
   )
 }
