@@ -1,5 +1,5 @@
 "use client"
-import { Sparkle, Map, MessageSquare } from "lucide-react"
+import { Sparkle, Map, MessageSquare, Shield } from "lucide-react"
 import Link from "next/link"
 import ThemeToggle from "./ThemeToggle"
 
@@ -29,6 +29,14 @@ const Navbar = () => {
             <MessageSquare className="h-4 w-4" />
             Feedback
           </Link>
+          {/* Admin Link */}
+          <Show when="signed-in">
+            <Link href="/admin"
+              className="text-sm hover:text-primary flex itmes-center gap-1">
+              <Shield className="h-4 w-4" />
+              Admin
+            </Link>
+          </Show>
         </div>
         <div className="flex items-center gap-4">
           <ThemeToggle />
