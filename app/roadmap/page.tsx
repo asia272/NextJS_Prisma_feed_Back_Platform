@@ -122,7 +122,7 @@ const page = async () => {
             </div>
             <Progress value={completedPercentage} className='h-2' />
           </div>
-          <div className='gird grid-cols-3 gap-4'>
+          <div className='grid grid-cols-3 gap-4'>
             <div className='text-center'>
               <div className='text-2xl font-bold text-yellow-600 dark:text-yellow-400'>
                 {inProgressPercentage}%
@@ -143,6 +143,15 @@ const page = async () => {
         </CardContent>
       </Card>
       {/* roadmap Columns */}
+      <div className='lg:grid-cols-4 grid grid-cols-1 gap-4'>
+        <Card>
+          <CardHeader>
+            <CardTitle>Under Review</CardTitle>
+          </CardHeader>
+        </Card>
+       
+       
+      </div>
     </div>
   )
 }
