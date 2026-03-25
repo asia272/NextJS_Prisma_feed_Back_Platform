@@ -54,6 +54,7 @@ export default function AdminFeedbackTable({ posts }: { posts: any[] }) {
                                             <User className="h-3 w-3" />
                                             <span className="truncate max-w-[100px]">
                                                 {post.author.name}
+                                                {console.log(post.author)}
                                             </span>
                                         </div>
                                     </TableCell>

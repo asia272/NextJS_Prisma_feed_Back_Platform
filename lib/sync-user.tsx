@@ -43,7 +43,7 @@ export async function syncCurrentUser() {
 
             const userCount = await prisma.user.count();
             const isFirstUser = userCount === 0;//get first user
-
+            console.log(activeUser.firstName)
             dbUser = await prisma.user.create({
                 data: {
                     clerkUserId: activeUser.id,
