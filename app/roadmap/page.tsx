@@ -164,7 +164,20 @@ const page = async () => {
                   {group.description}
                 </p>
               </div>
-
+              <div className='space-y-3'>
+                {postsInGroup.map((post) => (
+                  <Card key={post.id} >
+                    <CardHeader className='pb-3'>
+                      <CardTitle>
+                        {post.title}
+                      </CardTitle>
+                      <CardDescription>
+                        {post.author?.name} | {post.votes.length} votes
+                      </CardDescription>
+                    </CardHeader>
+                  </Card>
+                ))}
+              </div>
             </div>
           )
         })}
