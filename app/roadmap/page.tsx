@@ -2,9 +2,10 @@ import { GradientHeader } from '@/components/gradient-header'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import prisma from '@/lib/prisma'
-import { BarChart3, Target } from 'lucide-react';
+import { Badge, BarChart3, Target } from 'lucide-react';
 import { group } from 'node:console';
 import React from 'react'
+import { STATUS_GROUPS, STATUS_ORDER } from '../data/status-data';
 
 
 function getStatusPercentage(posts: any, status: string) {
@@ -144,13 +145,30 @@ const page = async () => {
       </Card>
       {/* roadmap Columns */}
       <div className='lg:grid-cols-4 grid grid-cols-1 gap-4'>
-        <Card>
-          <CardHeader>
-            <CardTitle>Under Review</CardTitle>
-          </CardHeader>
-        </Card>
-       
-       
+        {STATUS_ORDER.map((status) => {
+          const group = STATUS_GROUPS[status as keyof typeof STATUS_GROUPS];
+          const Icon = group.icon;
+          const postsInGroup = groupedPosts[status as keyof typeof groupedPosts];
+          return (
+            <div key={status} className='space-y-4'>
+              <div className={`rounded-lg p-4 ${group.bgColor} border ${group.color}`}>
+                <div className='flex items-center justify-between mb-2'>
+                  <div className='flex items-center gap-2'>
+                    <Icon className={`h-5 w-4 ${group.textColor}`} />
+                    <h2 className={`${group.textColor}`}>{group.title}</h2>
+                  </div>
+                  <Badge fontVariant="secondary" className={group.countColor}>
+                    {postsInGroup.length}
+                  </Badge>
+                </div>
+                <p className='text-sm text-muted-foreground'>
+                  {group.description}
+                </p>
+              </div>
+
+            </div>
+          )
+        })}
       </div>
     </div>
   )
