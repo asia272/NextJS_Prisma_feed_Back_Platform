@@ -1,3 +1,4 @@
+import AdminFeedbackTable from '@/components/admin-feedback-table';
 import { GradientHeader } from '@/components/gradient-header';
 import prisma from '@/lib/prisma';
 import { auth } from '@clerk/nextjs/server'
@@ -31,9 +32,11 @@ const page = async () => {
     })
     return (
         <div className='container mx-auto'>
-            <GradientHeader title='Admin Dashboard' subtitle='Manage feedbacks and update their status'>
-
-            </GradientHeader>
+            <GradientHeader
+                title='Admin Dashboard'
+                subtitle='Manage feedbacks and update their status'
+            />
+            <AdminFeedbackTable posts={posts} />
         </div>
     )
 }
