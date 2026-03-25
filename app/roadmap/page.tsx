@@ -1,10 +1,9 @@
 import { GradientHeader } from '@/components/gradient-header'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
 import prisma from '@/lib/prisma'
-import { Badge, BarChart3, Target } from 'lucide-react';
-import { group } from 'node:console';
-import React from 'react'
+import { BarChart3, Target } from 'lucide-react';
 import { STATUS_GROUPS, STATUS_ORDER } from '../data/status-data';
 
 
@@ -157,7 +156,7 @@ const page = async () => {
                     <Icon className={`h-5 w-4 ${group.textColor}`} />
                     <h2 className={`${group.textColor}`}>{group.title}</h2>
                   </div>
-                  <Badge fontVariant="secondary" className={group.countColor}>
+                  <Badge variant="secondary" className={group.countColor}>
                     {postsInGroup.length}
                   </Badge>
                 </div>
