@@ -99,7 +99,7 @@ const page = async () => {
                 <p className='text-sm text-muted-foreground'>Average Votes</p>
                 <p className='text-3xl font-bold'>{avergeVotes}</p>
               </div>
-              <BarChart3 className='h-20 w-10 text-yellow-500' />
+              <BarChart3 className='h-20 w-10 ' />
             </div>
           </CardContent>
         </Card>
@@ -124,16 +124,20 @@ const page = async () => {
           </div>
           <div className='gird grid-cols-3 gap-4'>
             <div className='text-center'>
-              <div>{inProgressPercentage}%</div>
-              <span>Inprogress</span>
+              <div className='text-2xl font-bold text-yellow-600 dark:text-yellow-400'>
+                {inProgressPercentage}%
+              </div>
+              <span className='text-sm text-muted-foreground'>Inprogress</span>
             </div>
             <div className='text-center'>
-              <div>{plannedPercentage}%</div>
-              <span>Planned</span>
+              <div className='text-2xl font-bold text-blue-600 dark:text-blue-400'>
+                {plannedPercentage}%
+              </div>
+              <span className='text-sm text-muted-foreground'>Planned</span>
             </div>
             <div className='text-center'>
-              <div>{completedPercentage}%</div>
-              <span>Completed</span>
+              <div className='text-2xl font-bold text-green-600 dark:text-green-400'>{completedPercentage}%</div>
+              <span className='text-sm text-muted-foreground'>Completed</span>
             </div>
           </div>
         </CardContent>
