@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
 import { getCategoryDesign } from "@/app/data/category-data";
 import { Badge } from "./ui/badge";
+import { ThumbsUp, User } from "lucide-react";
 
 export default function AdminFeedbackTable({ posts }: { posts: any[] }) {
     const [editingPostId, setEditingPostId] = useState<string | null>(null);
@@ -38,8 +39,23 @@ export default function AdminFeedbackTable({ posts }: { posts: any[] }) {
                                     </TableCell>
                                     <TableCell className="align-middle">
                                         <Badge variant="outline" className={`${categoryDesign.text} ${categoryDesign.border}`}>
+                                            <CategoryIcon className={`h-3 w-3 `} />
                                             {post.category}
                                         </Badge>
+                                    </TableCell>
+                                    <TableCell className="align-middle">
+                                        <div className="flex items-center gap-2">
+                                            <ThumbsUp className="h-3 w-3" />
+                                            {post.votes.length}
+                                        </div>
+                                    </TableCell>
+                                    <TableCell className="align-middle">
+                                        <div className="flex items-center gap-2">
+                                            <User className="h-3 w-3" />
+                                            <span className="truncate max-w-[100px]">
+                                                {post.author.name}
+                                            </span>
+                                        </div>
                                     </TableCell>
                                 </TableRow>
                             )
