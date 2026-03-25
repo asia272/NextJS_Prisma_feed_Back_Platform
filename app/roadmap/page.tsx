@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import prisma from '@/lib/prisma'
-import { BarChart3, Target } from 'lucide-react';
+import { BarChart3, Car, CheckCheck, Clock, Target } from 'lucide-react';
 import { STATUS_GROUPS, STATUS_ORDER } from '../data/status-data';
 
 
@@ -166,7 +166,8 @@ const page = async () => {
               </div>
               <div className='space-y-3'>
                 {postsInGroup.map((post) => (
-                  <Card key={post.id} >
+                  <Card key={post.id}
+                    className={`border-l-4 ${group.color} hover:shadow-lg transition-all duration-200 hover:-translate-y-1 cursor-pointer`} >
                     <CardHeader className='pb-3'>
                       <CardTitle>
                         {post.title}
@@ -175,11 +176,39 @@ const page = async () => {
                         {post.author?.name} | {post.votes.length} votes
                       </CardDescription>
                     </CardHeader>
+                    <CardContent className='pb-3'>
+                      <div className='flex justify-between items-center'>
+                        <Badge variant="outline" className='text-xs'>
+                          {post.category}
+                        </Badge>
+                        {status === "in_progress" && (
+                          <div className="flex items-center gap-1 text-xs text-yellow-600 dark:text-yellow-400">
+                            <Clock className='h-3 w-3' />
+                            Active
+                          </div>
+                        )}
+                        {status === "completed" && (
+                          <div className="flex items-center gap-1 text-xs text-yellow-600 dark:text-yellow-400">
+                            <CheckCheck className="h-3 w-3" />
+                            Shipped
+                          </div>
+                        )}
+                      </div>
+                    </CardContent>
                   </Card>
                 ))}
+             {postsInGroup.length === 0 && (
+                  <Card className="border-dashed opacity-60">
+                    <CardContent className="py-8 text-center">
+                      <p className="text-sm text-muted-foreground">
+                        No items in this stage
+                      </p>
+                    </CardContent>
+                  </Card>
+                )}
               </div>
             </div>
-          )
+          );
         })}
       </div>
     </div>
