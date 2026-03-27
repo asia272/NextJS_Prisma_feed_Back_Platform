@@ -6,7 +6,7 @@ import { stat } from "fs";
 import { STATIC_STATUS_PAGES } from "next/dist/shared/lib/constants";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: number }> }) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
         // 1 check if user exist
         const dbUser = await currentUser();
