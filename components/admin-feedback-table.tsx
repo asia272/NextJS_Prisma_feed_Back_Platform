@@ -13,11 +13,34 @@ export default function AdminFeedbackTable({ posts }: { posts: any[] }) {
     const [postStatus, setPostStatus] = useState<Record<number, string>>(
         Object.fromEntries(posts.map((post) => [post.id, post.status]))
     );
+    const [originalStatus, setOriginalStatus] = useState<Record<number, string>>(
+        {}
+    )
+
     const getStatusIcon = (status: string) => {
         const statusGroup = STATUS_GROUPS[status as keyof typeof STATUS_GROUPS];
         if (!statusGroup) return null;
         const Icon = statusGroup.icon;
         return <Icon className="h-3 w-3 mr-1" />
+    }
+    const startEditing = (postId: number) => {
+        setOriginalStatus((prev) => ({
+            ...prev,
+            [postId]: originalStatus[postId],
+        }))
+        setEditingPostId(postId);
+    }
+    const cancelEditing = (postId: number) => {
+        if (originalStatus[postId]) {
+            setOriginalStatus((prev) => ({
+                ...prev,
+                [postId]: originalStatus[postId],
+            }))
+        }
+        setEditingPostId(null);
+    }
+    const saveStatus = (postId: number) => {
+
     }
     return (
         <Card>
@@ -69,7 +92,7 @@ export default function AdminFeedbackTable({ posts }: { posts: any[] }) {
                                     </TableCell>
                                     <TableCell className="align-middle">
                                         {isEditing ? <>
-                                      
+
                                         </> :
                                             <Badge
                                                 variant="outline"
@@ -91,7 +114,7 @@ export default function AdminFeedbackTable({ posts }: { posts: any[] }) {
                                             <>
                                                 <Button
                                                     size="sm"
-                                                    onClick={saveStatus(post.id)}
+                                                    onClick={() => saveStatus(post.id)}
                                                     className="gap-1 h-8"
                                                 >
                                                     <Save className="h-3 w-3" />Save
