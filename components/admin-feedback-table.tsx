@@ -5,8 +5,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
 import { getCategoryDesign } from "@/app/data/category-data";
 import { Badge } from "./ui/badge";
 import { Edit, Save, ThumbsUp, User, X } from "lucide-react";
-import { STATUS_GROUPS } from "@/app/data/status-data";
+import { STATUS_GROUPS, STATUS_ORDER } from "@/app/data/status-data";
 import { Button } from "./ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 export default function AdminFeedbackTable({ posts }: { posts: any[] }) {
     const [editingPostId, setEditingPostId] = useState<number | null>(null);
@@ -91,9 +92,40 @@ export default function AdminFeedbackTable({ posts }: { posts: any[] }) {
                                         </div>
                                     </TableCell>
                                     <TableCell className="align-middle">
-                                        {isEditing ? <>
-
-                                        </> :
+                                        {isEditing ?
+                                            <>
+                                                <Select
+                                                    value={currentStatus}
+                                                    onValueChange={(value) =>
+                                                        handleStatusChange(post.id, value)
+                                                    }
+                                                >
+                                                    <SelectTrigger className="w-[140px]">
+                                                        <SelectValue>
+                                                            <div className="flex items-center">
+                                                                {getStatusIcon(currentStatus)}
+                                                                {STATUS_GROUPS[
+                                                                    currentStatus as keyof typeof STATUS_GROUPS
+                                                                ]?.title}
+                                                            </div>
+                                                        </SelectValue>
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        {STATUS_ORDER.map((status) => {
+                                                            const statusGroup = STATUS_GROUPS[status as keyof typeof STATUS_GROUPS];
+                                                            const Icon = statusGroup.icon;
+                                                            return (
+                                                                <SelectItem key={status} value={status}>
+                                                                    <div className="flex items-center gap-2">
+                                                                        <Icon className="h-3 w-3" />
+                                                                        {statusGroup.title}
+                                                                    </div>
+                                                                </SelectItem>
+                                                            )
+                                                        })}
+                                                    </SelectContent>
+                                                </Select>
+                                            </> :
                                             <Badge
                                                 variant="outline"
                                                 className={`flex items-center gap-2 
@@ -122,7 +154,7 @@ export default function AdminFeedbackTable({ posts }: { posts: any[] }) {
                                                 <Button
                                                     variant="ghost"
                                                     size="sm"
-                                                    onClick={cancelEditing(post.id)}
+                                                    onClick={() => cancelEditing(post.id)}
                                                     className="gap-1 h-8"
                                                 >
                                                     <X className="h-3 w-3" />
@@ -132,7 +164,7 @@ export default function AdminFeedbackTable({ posts }: { posts: any[] }) {
                                                 <Button
                                                     variant="ghost"
                                                     size="sm"
-                                                    onClick={startEditing(post.id)}
+                                                    onClick={() => startEditing(post.id)}
                                                     className="gap-1 h-8"
                                                 >
                                                     <Edit className="h-3 w-3" />
