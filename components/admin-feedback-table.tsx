@@ -1,3 +1,4 @@
+
 "use client";
 import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
@@ -8,6 +9,7 @@ import { Edit, Save, ThumbsUp, User, X } from "lucide-react";
 import { STATUS_GROUPS, STATUS_ORDER } from "@/app/data/status-data";
 import { Button } from "./ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { toast } from "sonner";
 
 export default function AdminFeedbackTable({ posts }: { posts: any[] }) {
     const [editingPostId, setEditingPostId] = useState<number | null>(null);
@@ -23,6 +25,12 @@ export default function AdminFeedbackTable({ posts }: { posts: any[] }) {
         if (!statusGroup) return null;
         const Icon = statusGroup.icon;
         return <Icon className="h-3 w-3 mr-1" />
+    }
+    const handleStatusChange = (postId: number, newSatus: string) => {
+        setPostStatus((prev) => ({
+            ...prev,
+            [postId]: newSatus
+        }))
     }
     const startEditing = (postId: number) => {
         setOriginalStatus((prev) => ({
@@ -40,7 +48,30 @@ export default function AdminFeedbackTable({ posts }: { posts: any[] }) {
         }
         setEditingPostId(null);
     }
-    const saveStatus = (postId: number) => {
+    const saveStatus = async (postId: number) => {
+        // Show loading toat
+        const loadingToast = toast.loading("Saving status...")
+        try {
+            const response = await fetch(`api/feedback/${postId}/status`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ status: postStatus[postId] }),
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to update status");
+            }
+
+            toast.dismiss(loadingToast);
+            toast.success("Feedback status updated successfully!");
+            setEditingPostId(null)
+        } catch (error) {
+            console.error("Faild to update status: ", error)
+            toast.dismiss(loadingToast);
+            toast.error("Failed to update status, Please try again.");
+        }
 
     }
     return (
