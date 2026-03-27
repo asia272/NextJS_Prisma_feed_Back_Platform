@@ -37,7 +37,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
 
         //4 If every thing is ok then update
         const updatedPost = await prisma.post.update({
-            where: { id: postId },
+            where: { id: Number(postId) },
             data: {
                 status
             },
