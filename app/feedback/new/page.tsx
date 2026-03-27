@@ -1,4 +1,6 @@
 "use client"
+export const dynamic = "force-dynamic";
+
 import { CATEGORIES_TYPES } from "@/app/data/category-data"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"

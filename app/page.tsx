@@ -1,10 +1,12 @@
+export const dynamic = "force-dynamic";
+
 import { GradientHeader } from "@/components/gradient-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, BarChart, Map, MessageSquare, User, Zap } from "lucide-react";
 import Link from "next/link";
 
-export default function Home() {
+export default function Home() { 
   return (
     <div>
       <GradientHeader title="Shape the future of our product" subtitle="Feedback Fusion is where your ideas come to life. Suggest features, vote on what matters most, and follow our public roadmap">
@@ -15,6 +17,7 @@ export default function Home() {
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
+          
           <Button asChild size="lg"
             className="bg-white text-black hover:bg-gray-100">
             <Link href="/roadmap">View Roadmap

@@ -1,10 +1,10 @@
+export const dynamic = "force-dynamic";
+
 import AdminFeedbackTable from '@/components/admin-feedback-table';
 import { GradientHeader } from '@/components/gradient-header';
 import prisma from '@/lib/prisma';
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation';
-
-
 
 const page = async () => {
     const { userId } = await auth();

@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { GradientHeader } from '@/components/gradient-header'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
