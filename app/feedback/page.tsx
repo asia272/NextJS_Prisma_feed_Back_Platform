@@ -1,4 +1,3 @@
-export const dynamic = "force-dynamic";
 
 import { GradientHeader } from '@/components/gradient-header'
 import { Button } from '@/components/ui/button'

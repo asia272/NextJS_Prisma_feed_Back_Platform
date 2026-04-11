@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic";
+
 
 import AdminFeedbackTable from '@/components/admin-feedback-table';
 import { GradientHeader } from '@/components/gradient-header';
