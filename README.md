@@ -37,5 +37,4 @@
 - Prisma (ORM)  
 - Vercel (Deployment)  
 
----
 
