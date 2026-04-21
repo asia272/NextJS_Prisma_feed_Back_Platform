@@ -12,9 +12,7 @@ function getStatusPercentage(posts: any, status: string) {
   const statusCount = posts.filter(
     (p: { status: string }) => p.status === status,
   ).length;
-  console.log(
-    `Total : ${totalPosts}, count: ${statusCount}, per: ${totalPosts > 0 ? Math.round((statusCount / totalPosts) * 100) : 0}`,
-  );
+ 
   return totalPosts > 0 ? Math.round((statusCount / totalPosts) * 100) : 0;
 }
 const page = async () => {
@@ -105,7 +103,7 @@ const page = async () => {
         </Card>
       </div>
       {/* Overall  Progress */}
-      <Card>
+      <Card className='mb-8 mt-8'>
         <CardHeader>
           <CardTitle>Roadmap Progress</CardTitle>
           <CardDescription>
