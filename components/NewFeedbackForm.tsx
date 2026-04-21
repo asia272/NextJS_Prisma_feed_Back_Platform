@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
-const NewFeedbackForm = async () => {
+const NewFeedbackForm =() => {
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
