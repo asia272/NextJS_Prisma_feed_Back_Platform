@@ -26,7 +26,7 @@ export default async function RootLayout({
   return (
 
     <ClerkProvider>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
 
         <body className={`${inter.className} min-h-screen flex flex-col`}>
           <ThemeProvider attribute={"class"}
